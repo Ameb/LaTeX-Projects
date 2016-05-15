@@ -1,0 +1,190 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[utf8]{inputenc}
+\usepackage{fourier} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[spanish]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+\usepackage{lipsum} % Used for inserting dummy 'Lorem ipsum' text into the template
+
+%\usepackage{sectsty} % Allows customizing section commands
+%\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+%\usepackage{fancyhdr} % Custom headers and footers
+%\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+%\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+%\fancyfoot[L]{} % Empty left footer
+%\fancyfoot[C]{} % Empty center footer
+%\fancyfoot[R]{\thepage} % Page numbering for right footer
+%\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+%\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+%\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+%\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+%\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+%\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\setcounter{secnumdepth}{0}% Remove section numbering
+\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+%\title{	
+%\normalfont \normalsize 
+%\textsc{university, school or department name} \\ [25pt] % Your university, school and/or department name(s)
+%\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+%\huge Assignment Title \\ % The assignment title
+%\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+%}
+
+%\author{John Smith} % Your name
+
+%\date{\normalsize\today} % Today's date or a custom date
+\DeclareMathOperator*{\argmin}{arg\!\min}
+\begin{document}
+
+%\maketitle % Print the title
+
+%----------------------------------------------------------------------------------------
+%	PROBLEM 1
+%----------------------------------------------------------------------------------------
+
+\section{Tema 1}
+Las conectivas satisfacen las siguientes propiedades:
+\begin{itemize}
+\item Conmutatividad
+\item Asociatividad
+\item Idempotencia
+\item Distributiva
+\item Identidad
+\item Involución
+\item De Morgan
+\end{itemize}
+No satisfacen ley de contradicción ni de tercio excluso. El conjunto de las $\mathcal{P}(U)$ con el $max$ y el $min$ forma un \textbf{lattice} distributivo y complementado, pero no un álgebra de bool por lo comentado antes. También forman un lattice De Morgan.
+\subsection{Automorfismo}
+$\varphi :[a,b]\rightarrow [a,b]$ continua, estrictamente creciente y cumpliendo $$\varphi (a)=a,\ \varphi (b)=b$$ es automorfismo del intervalo $[a,b]\subset\mathbb{R}$
+
+\subsection{Negacion}
+$c:[0,1]\rightarrow[0,1]$ es una negación difusa $\iff c(0)=1 \land c(1)=0$ y $c(x)\leq c(y), si x\geq y$\\
+$c$ estricta $\iff$ creciente estricta (continua y $c(x)<c(y), x>y\  \forall x,y \in [0,1]$)\\
+$c$ involutiva $\iff c(c(x))=x,\ \forall x \in [0,1]$\\
+Las negaciones involutivas son negaciones fuertes Una negación involutiva es estricta\\
+$c$ fuerte $\iff\exists\varphi$ automorfismo tal que $c(x)=\varphi^{-1}(1-\varphi(x))$
+\subsection{Tnorma}
+$T:[0,1]^2\rightarrow[0,1]$ es t-norma si cumple:\\
+$T(x,1)=x,\ \forall x\in[0,1]$ Condiciones de contorno\\ $T(x,y)\leq T(z,u)$ si $x\leq z\ \land\ y\leq u$ Monotonia\\ Además de Conmutativa y Asociativa
+\medbreak $T$ arquimediana si $T(x,x)<x\ \forall x \in (0,1)$\\
+$T$ continua y arquimediana es positiva $\iff$ es estricta\\
+Cualquier $T$ estricta es arquimediana\\
+$T$ continua y arquimediana $\iff \exists f:[0,1]\rightarrow[0,\infty]$ con $f(1)=0$ estrictamente decreciente y continua tal que: $$T(x,y)=f^{(-1)}(f(x)+f(y))$$ donde 
+$$f^{(-1)}=\begin{cases} f^{-1}(x) & \text{si }x\leq f(0) \\ 0 & \text{ en otro caso}
+\end{cases}$$
+Ejemplos de funciones generadoras son $f(x)=-log(x)$ y $f(x)=1-x$\medbreak
+Si $T$ es continua tal que $T(x,c(x))=0\ \forall x\in [0,1]$ con $c$ estricta entonces $T$ es arquimediana. 
+Además $T(x,y)=\varphi^{-1}(\min(\varphi(x)+\varphi(y)-1,0))$ con $c(x) \leq \varphi^{-1}(1-\varphi(x))$\\
+$T$ estricta $\iff T(x,y)=\varphi^{-1}(\varphi(x)\varphi(y)),\ x,y\in[0,1]$\\
+La tnorma minimo es la mayor y la unica idempotente. Es continua pero no es arquimediana. Las tnormas de la familia del producto ($P$) son continuas, arquimedianas y estrictamente positivas. Las de la familia de Lukasiewicz ($W$) son continuas y arquimedianas, pero no estrictas o positivas.
+$$W(x,y)\leq P(x,y) \leq Min(x,y)$$
+\subsection{Tconorma}
+$S:[0,1]^2\rightarrow[0,1]$ es t-conorma si cumple:\\
+$S(x,0)=x,\ \forall x\in[0,1]$ Condiciones de contorno\\ $S(x,y)\leq S(z,u)$ si $x\leq z\ \land\ y\leq u$ Monotonia\\ Además de Conmutativa y Asociativa
+\medbreak $S$ arquimediana si $S(x,x)>x\ \forall x \in (0,1)$\\
+$S$ nilpotente si $\exists x,y \in (0,1)$ tal que $S(x,y)=1$\\
+$S$ continua y arquimediana $\iff \exists g:[0,1]\rightarrow[0,\infty]$ con $g(0)=0$ estrictamente creciente y continua tal que: $$S(x,y)=g^{(-1)}(g(x)+g(y))$$ donde 
+$$g^{(-1)}=\begin{cases} g^{-1}(x) & \text{si }x\leq g(1) \\ 1 & \text{ en otro caso}
+\end{cases}$$
+Ejemplos de funciones generadoras son $g(x)=-log(1-x)$ y $g(x)=x$\medbreak
+$S$ cumple $S(x,c(x))=1\ \forall x\in [0,1]$ con $c$ estricta $\iff \exists \varphi$ automrfismo del intervalo unidad tal que 
+$S(x,y)=\varphi^{-1}(\max(\varphi(x)+\varphi(y),1))$ y $c(x)\geq \varphi^{-1}(1-\varphi(x))$\medbreak
+Una t-conorma continua $S$ es estricta $\iff \exists \varphi$ tal que $$S(x,y)=\varphi^{-1}(\varphi(x)+\varphi(y)-\varphi(x)\varphi(y))$$
+\bigbreak
+\subsection{Dualidad}
+$(T,S,c)$ es un triple De Morgan $\iff c(S(x,y))=T(c(x),c(y))$
+\section{Tema 2}
+\subsection{Composicion}
+Sea $R$ una relacion en $U \times V$. Sea $S$ en $V \times W$.$R \circ S:$
+$$\mu_{R \circ S}(u,w)= \sup_{v \in V}[\mu_R(u,v)\ast\mu_S(v,w)]$$
+Donde $\sup$ es una t-conorma y $\ast$ es una tnorma.
+\subsection{Implicacion}
+$I:[0,1]^2\rightarrow[0,1]$ es implicacion si cumple $I(0,x)=I(x,1)=I(1,1)=1\ \forall x\in [0,1]$ y $I(1,0)=0$. Además:\\
+$x \leq z \Rightarrow I(x,y) \geq I(z,y) \forall y \in [0,1]$\\
+$y \leq t \Rightarrow I(x,y) \leq I(x,t) \forall x \in [0,1]$\\
+Medida de cuanto de cierto es el consecuente respecto al antecedente. Otras propiedades:\\
+$I(x,0) =c(x)$ es una negacion fuerte\\
+$I(x,y) =I(c(y),c(x))$\\
+$I(x,y) \geq y$
+$I(c(x),x)=x$
+\subsubsection{S-implications}
+$I(x,y)=S(c(x),y)$
+\subsubsection{QL-implications}
+No suelen cumplir $x \leq z \Rightarrow I(x,y) \geq I(z,y) \forall y \in [0,1]$\\
+$I(x,y)=S(c(x),T(x,y))$
+\subsubsection{R-implications}
+$I(x,y)=\sup {z|T(x,y) \leq y})$
+\subsection{GMP}
+Tenemos dos premisas:\\
+Si $x$ es $A$ entonces $y$ es $B$\\
+$x$ es $A'$\\
+Consecuente: $y$ es $B'$
+\subsection{GMT}
+Tenemos dos premisas:\\
+Si $x$ es $A$ entonces $y$ es $B$\\
+$u$ es $B'$\\
+Consecuente: $x$ es $A'$
+\section{Tema 3}
+Gradiente.
+\section{Tema 4}
+\subsection{Funcion penalty}
+$P:[a,b]^{n+1}\rightarrow\mathbb{R}^+=[0,\infty]$ Satisface:\\
+$P(\bar{x},y) \geq 0,\ \forall \bar{x}\in [a,b]^n,y\in [a,b]$\\
+$P(\bar{x},y) = 0$ si $x_i = y\ \forall i=1,...,n$\\
+$P(\bar{x},y$ es quasiconvexa en $y$ para cualquier $\bar{x}$:
+$$P(\bar x,\lambda\cdot y_1+(1-\lambda)\cdot y_2) \leq \max(P(\bar{x},y_1),P(\bar{x},y_2))$$
+\subsection{Disimilitud}
+$d_R:[0,1]^2\rightarrow[0,1]$ es una función de disimilitud restringida si:
+$d_R(x,y)=d_R(y,x)\ \forall x,y \in [0,1]$||
+$d_R(x,y) = 1\iff x=0,y=1 \lor x=1,y=0$; es decir, $\{x,y\} = \{0,1\}$\\
+$d_R(x,y) = 0\iff x=y$\\
+Para cada $x,y,z\in [0,1]$, si $x \leq y \leq z$, entonces $d_R(x,y) \leq d_R(x,z)$ y $d_R(y,z) \leq d_R(x,z)$.
+\subsection{Distancia}
+\section{Tema 5}
+\section{Tema 6}
+\subsection{Agregacion}
+$M:[0,1]^n\rightarrow[0,1]$\\
+$M(0,...,0) = 0 \land M(1,...,1)=1$\\
+Monotona no decreciente en cada componente
+\subsection{REF}
+$REF:[0,1]^2\rightarrow[0,1]$\\
+Conmutativa\\4$=1\iff x=y$\\$ =0 \iff x=1\land y=0$ ó $x=0\land y=1$\\$REF(x,y)=REF(c(x),c(y))\ \forall x,y\in [0,1]$ si $c$ es negacion fuerte\\$\forall x,y,z\in[0,1]$ si $x\leq y \leq \Rightarrow REF(x,y)\geq REF(x,z) \land REF(y,z)\geq REF(x,z)$
+\subsection{Normal $E_N$}
+\section{Tema 7}
+\subsection{Fukami, Baldwin y Pilsworth. Axiomas}
+\subsection{Overlap}
+$G:[0,1]^2\rightarrow[0,1]$ es una funcion de overlap si cumple:\\
+Conmutativa\\$=0\iff xy=0$\\$=1\iff xy=1$\\Creciente y continua\\Si es asociativa es una t-norma\\
+Para hablar de indice de overlap se sustituye por conjuntos
+\subsection{Interpolación y regla composicional}
+\paragraph{Regla composicional} En la regla composicional se considera $$B'=A'\circ R \equiv \mu_{B'}(y)=\underset{x \in X}{\max}T\{\mu_{A'}(x),\mu_R(x,y)\}$$ Donde $R$ la construimos mediante la impliacion $I(\mu_A,\mu_B)$
+\paragraph{Interpolacion} Primero se calcula el grado de similitud entre $A$ y $A'$ con $c(A,A')$\\Con ello se contruye C\\Se calcula $B'=\min (B,C)$
+\end{document}
