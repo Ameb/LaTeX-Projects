@@ -1,0 +1,155 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{minted}
+\usepackage{listings}
+% grafico
+\usepackage{xcolor}
+\usepackage{tkz-graph}
+\usetikzlibrary{arrows}
+% /grafico
+\usepackage[a4paper,bottom=2.5cm]{geometry}
+\usepackage{fancyhdr}
+\author{Iñigo Biedma Ramos}
+\title{Entrega Ejercicios Algoritmos Voraces}
+\date{}
+\renewcommand{\theenumi}{\alph{enumi}}
+\pagestyle{fancy}
+%\fancyhf{}
+\lhead{Entrega Ejercicios Algoritmos Voraces - Algoritmia}
+\rhead{Iñigo Biedma Ramos}
+\begin{document}
+\maketitle
+\paragraph{Ejercicio 1}
+Tenemos n peticiones de uso de un laboratorio, cada uno con un tiempo de comienzo si y un tiempo de finalización ti para cada petición i. Asumimos que todos los tiempos de comienzo y final son diferentes. Dos peticiones entran en conflicto si se solapan (es decir si el tiempo de comienzo de una petición es anterior al tiempo de finalización de otra). Nuestro objetivo es seleccionar un mayor número de peticiones que no contengan solapamientos. (Por ejemplo si tenemos estas tres peticiones [0, 3], [2, 5], [4 7] entonces seleccionaremos la primera y la tercera). Diseña un algoritmo voraz que calcule la solución óptima.
+\subparagraph{}
+Necesitamos pensar en la acción de selección del algoritmo voraz que elaboraremos. Como la elección de una petición depende de si se solapa o no con el resto, y no queremos revisar todas cada vez, las ordenaremos por tiempo de comienzo. La última tarea la vamos a tomar siempre, ya que no condiciona al resto. Después escogeremos el resto teniendo en cuenta que no se solapen, de la que mayor tiempo de comienzo a la de menor. \\
+El pseudocódigo para la selección quedará de la siguiente manera:
+\begin{verbatim}
+tipo
+    matriz = tabla[1..N,1..2];
+ftipo
+accion seleccion(ent tord:matriz, ent n, sal sel:matriz, sal nsel);
+    var
+        i:entero;
+    fvar
+    sel[1] := tord[n];
+    nsel := 1;
+    para i = n-2 hasta 1 hacer
+        si tord[i][2] < sel[nsel][1] -->
+            nsel := nsel + 1;
+            sel[nsel] := tord[i]
+        [] tord[i][2] > sel[nsel][1] --> // por el enunciado no pueden ser iguales
+            continuar;
+        fsi
+    fpara
+faccion
+\end{verbatim}
+Se puede ver que la eficiencia de la selección es O(n). Como antes de ello realizamos la ordenación (merge/quick/heap/intro sort) de coste $O(n log_2 n)$, el coste total será $O(n log_2 n)$.\\
+He codificado el algoritmo en C. Adjunto el código, que trabaja con una tabla de 62 tareas (generadas al azar con numeros positivos todos distintos). Se utiliza qsort (stdlib) para ordenar la tabla.
+\pagebreak
+\begin{minted}{c}
+#include <stdio.h>      /* printf */
+#include <stdlib.h>     /* qsort */
+#define N 62
+int CompareArrays(const void* arr1, const void* arr2);
+int select(int tord[N][2], int n, int** sel);
+int main ()
+{
+	int values[N][2] = {
+		{132,152},{57,150},{23,52},{15,124},{16,179},{161,187},{19,119},{26,
+		39},{50,198},{10,75},{88,200},{96,166},{90,109},{14,138},{17,101},{46,63},{68,
+		92},{73,87},{99,193},{44,158},{3,37},{48,157},{125,128},{29,135},{49,185},{25,
+		108},{131,194},{66,70},{100,159},{165,199},{4,103},{51,123},{81,141},{79,111},
+		{8,147},{13,60},{20,148},{12,30},{35,91},{94,98},{105,114},{34,47},{62,129},{1
+		33,163},{1,45},{153,170},{149,183},{107,118},{69,196},{65,86},{38,169},{9,192}
+		,{11,130},{78,164},{95,156},{84,155},{67,175},{115,145},{178,184},{162,188},{7
+		2,122},{31,120}     };
+	};
+	/*int values[N][2] = { 
+		{2,5}, {4,7}, {0,3}
+	};*/
+
+	int i,nsel,**sel;
+	sel = (int**) malloc (N*sizeof(int*));
+	for (i=0; i<N;i++)
+		sel[i] = (int*) malloc (2*sizeof(int));
+	//Mostramos la tabla
+	printf("La tabla original:\n");
+	for (i=0; i<N; i++)
+		printf ("{%d,%d} ",values[i][0],values[i][1]);
+	//ordenamos
+	qsort (values, N, 2*sizeof(int), CompareArrays);
+	printf("\nTras ordenar:\n");
+	for (i=0; i<N; i++)
+		printf ("{%d,%d} ",values[i][0],values[i][1]);
+	//seleccionamos
+	nsel = select(values, N, sel);
+	printf("\nSe han elegido %d tareas:\n",nsel);
+	for (i=nsel-1; i>=0; i--)
+		printf ("{%d,%d} ",sel[i][0],sel[i][1]);
+	printf("\n");
+	return 0;
+}
+//
+int CompareArrays(const void* arr1, const void* arr2) {
+	int* one = (int*) arr1;
+	int* two = (int*) arr2;
+	return one[0]-two[0];
+}
+//
+int select(int tord[N][2], int n, int** sel) {
+	int i,nsel = 0;
+	sel[0][0] = tord[n-1][0];
+	sel[0][1] = tord[n-1][1];
+	for(i = n-2; i >= 0; i--)
+		if (tord[i][1] < sel[nsel][0]){
+			nsel++;
+			sel[nsel][0] = tord[i][0];
+			sel[nsel][1] = tord[i][1];
+		}
+	nsel++;
+	return nsel;
+}
+\end{minted}
+Ejemplo de ejecución del programa:
+\begin{lstlisting}[breaklines]
+La tabla original:
+{132,152} {57,150} {23,52} {15,124} {16,179} {161,187} {19,119} {26,39} {50,198} {10,75} {88,200} {96,166} {90,109} {14,138} {17,101} {46,63} {68,92} {73,87} {99,193} {44,158} {3,37} {48,157} {125,128} {29,135} {49,185} {25,108} {131,194} {66,70} {100,159} {165,199} {4,103} {51,123} {81,141} {79,111} {8,147} {13,60} {20,148} {12,30} {35,91} {94,98} {105,114} {34,47} {62,129} {133,163} {1,45} {153,170} {149,183} {107,118} {69,196} {65,86} {38,169} {9,192} {11,130} {78,164} {95,156} {84,155} {67,175} {115,145} {178,184} {162,188} {72,122} {31,120}
+Tras ordenar:
+{1,45} {3,37} {4,103} {8,147} {9,192} {10,75} {11,130} {12,30} {13,60} {14,138} {15,124} {16,179} {17,101} {19,119} {20,148} {23,52} {25,108} {26,39} {29,135} {31,120} {34,47} {35,91} {38,169} {44,158} {46,63} {48,157} {49,185} {50,198} {51,123} {57,150} {62,129} {65,86} {66,70} {67,175} {68,92} {69,196} {72,122} {73,87} {78,164} {79,111} {81,141} {84,155} {88,200} {90,109} {94,98} {95,156} {96,166} {99,193} {100,159} {105,114} {107,118} {115,145} {125,128} {131,194} {132,152} {133,163} {149,183} {153,170} {161,187} {162,188} {165,199} {178,184}
+Se han elegido 10 tareas:
+{26,39} {46,63} {66,70} {73,87} {94,98} {107,118} {125,128} {132,152} {153,170} {178,184}
+\end{lstlisting}
+\paragraph{Ejercicio 3}
+Consideramos un grafo no dirigido G=(V,A), donde cada arco a in A tiene un coste $c_a$. Suponemos que todos los arcos tienen un coste positivo y diferente entre ellos. Sea T el árbol recubridor mínimo de G y P el camino más corto entre vértice s al vértice t. Ahora vamos a suponer que incrementamos el coste de cada arco en 1 unidad, es decir $c_a$+ 1. Llamamos a este nuevo grafo G’. ¿Cuál de las siguientes es cierta?
+\begin{enumerate}
+\item T es siempre el árbol recubridor mínimo y P es siempre el camino más corto entre s y t.
+\item T puede que no sea el árbol recubridor mínimo pero P si es el camino más corto entre s y t.
+\item T es el árbol recubridor mínimo y P puede que no sea el camino más corto entre s y t.
+\item T puede que no sea el árbol recubridor mínimo y P puede que no sea el camino más corto entre s y t.
+\end{enumerate}
+\subparagraph{}
+Debemos ver:
+\begin{itemize}
+\item \textbf{T sigue siendo árbol recubridor mínimo del nuevo grafo G'}\par
+Al tener todos los arcos un coste diferente, sólo existirá un único árbol recubridor mínimo. \\
+\textit{Demostracion:} Supongamos que tenemos dos ARM: T y T*. Si son diferentes, difieren en algún arco. Tomemos el arco $a_1$, que tiene el menor peso de aquellos en los que difieren. Asumimos que pertenece a T pero no a T*. Como T* es ARM, $T\cup \{a_1\}$ formará un ciclo. En ese ciclo habrá otro arco $a_2$ con peso mayor que $a_1$. Cambiando $a_1$ y $a_2$ en B obtenemos otro ARM, contradiciendo la suposición inicial.\\
+Un árbol con n vértices tendrá n-1 aristas. Al aumentar en 1 los pesos de todas las aristas, entonces el coste de los posibles árboles generadores de un grafo aumentará en n-1. Como todos los árboles generadores aumentan su peso en la misma cantidad, el que de ellos sea mínimo lo seguirá siendo. \\
+Por lo tanto en nuestro caso T seguirá siendo árbol recubridor (o generador) mínimo de G'.
+\item \textbf{P sigue siendo el camino más corto entre s y t}\par
+Podemos encontrar un contraejemplo. El siguiente grafo:\\
+\input{grafico_1.tex}
+Entre S y T el camino más corto es \{S,A,B,C,D,E,T\}, pero al aumentar el peso de cada arista en 1 deja de serlo.
+\input{grafico_2.tex}
+El camino más corto es ahora \{S,Z,T\}, por lo que P puede que no sea el camino más corto.
+%Supongamos que existe otro camino P* de coste menor entre s y t, que contiene las aristas $a_1$,$a_2$,...,$a_n$, cuyo coste es del camino P* de G + n. \par
+%Si P y P* tienen el mismo número de aristas, entonces el coste de P en G' es el coste que tenía en G + n. Como P* tiene un coste menor que P en G', también lo tendrá en G. Pero P era el camino más corto, se contradice el enunciado. \par
+%Veamos el otro caso, cuando P* tiene distinto número de aristas. Si tiene más aristas, será un camino más largo que P de forma trivial. (En G' ha aumentado en 1 el coste de todas las aristas). Si tiene menos aristas que P, entonces se podrán tomar esas aristas de P* en G para formar un camino más corto que P, contradiciendo el enunciado.\par
+%Por lo tanto, el camino P es el más corto entre s y t en G'
+\end{itemize}
+\textbf{La única respuesta correcta es la c: T es el árbol recubridor mínimo y P puede que no sea el camino más corto entre s y t.}
+\end{document}
