@@ -1,5 +1,5 @@
 # LaTeX-Projects
-Mis proyectos de LaTeX
+Mis ~~proyectos~~ documentos realizados con LaTeX.
 
 ## Presentacion OTSU - Vision Artificial 2016
 Una buena presentación, aunque con muchas imágenes.
